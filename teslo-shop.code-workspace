@@ -1,6 +1,12 @@
 {
   "folders": [
     {
+      "path": "_config"
+    },
+    {
+      "path": "backend"
+    },
+    {
       "path": "frontend"
     }
   ],
