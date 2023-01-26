@@ -1,3 +1,3 @@
-# Next JS Teslo Shop
+# Nextjs EZARA Shop
 
-This is a recreate project to nextjs teslo shop. This is the frontend project.
+This is a recreate project to Nextjs EZARA Shop. This is the frontend project.
