@@ -26,6 +26,11 @@
       "type": "text",
       "required": true,
       "maxLength": 240
+    },
+    "summary": {
+      "type": "string",
+      "required": true,
+      "maxLength": 90
     }
   }
 }
