@@ -6,3 +6,7 @@
 - Username: dariuswhitney
 
 # Frontend
+
+# Figma
+
+- https://www.figma.com/file/S9edUt0fU8q7ZTr2rMZ3Kl/ZARA-Redesign-UI-kit-(Community)?t=dSFiLj4o6SUQZJwt-1
