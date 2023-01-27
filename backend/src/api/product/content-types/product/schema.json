@@ -31,6 +31,14 @@
       "type": "string",
       "required": true,
       "maxLength": 90
+    },
+    "Images": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": true,
+      "required": true
     }
   }
 }
