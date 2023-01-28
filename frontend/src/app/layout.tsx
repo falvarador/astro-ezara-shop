@@ -1,6 +1,7 @@
-import { Acme } from "@next/font/google";
+import Footer from "@/components/footer";
+import Header from "@/components/header";
 
-const acme = Acme({ weight: "400", style: "normal", subsets: ["latin"] });
+import { gothamPro } from "@/fonts";
 
 import "./globals.css";
 
@@ -10,13 +11,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={gothamPro.variable}>
       {/*
         <head /> will contain the components returned by the nearest parent
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body style={acme.style}>{children}</body>
+      <body>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
