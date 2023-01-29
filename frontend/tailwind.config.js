@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--gotham-pro)", ...defaultTheme.fontFamily.sans],
+        sans: ["var(--inter)", ...defaultTheme.fontFamily.sans],
       },
     },
   },

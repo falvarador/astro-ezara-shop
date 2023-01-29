@@ -1,1 +1,1 @@
-export * from "./gotham_pro";
+export * from "./inter";

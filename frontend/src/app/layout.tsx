@@ -1,7 +1,5 @@
-import Footer from "@/components/footer";
-import Header from "@/components/header";
-
-import { gothamPro } from "@/fonts";
+import { Footer, Header } from "@/components";
+import { inter } from "@/fonts";
 
 import "./globals.css";
 
@@ -11,7 +9,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={gothamPro.variable}>
+    <html lang="en" className={inter.variable}>
       {/*
         <head /> will contain the components returned by the nearest parent
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head

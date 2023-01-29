@@ -1,7 +1,9 @@
-export default function Header() {
+import { Navbar } from "@/components";
+
+export function Header() {
   return (
-    <footer className="text-2xl">
-      <strong>This is the header</strong>
-    </footer>
+    <header>
+      <Navbar />
+    </header>
   );
 }
