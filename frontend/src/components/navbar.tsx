@@ -1,4 +1,6 @@
-import { Cart, Location, Search } from "@/components/icons";
+import { Cart, Menu, Location, Search } from "@/components";
+
+import { MainMenu } from "@/models";
 
 export function Navbar() {
   return (
@@ -14,7 +16,9 @@ export function Navbar() {
           <Cart />
         </div>
       </div>
-      <div></div>
+      <div>
+        <Menu isPrimary pathNames={MainMenu} />
+      </div>
     </nav>
   );
 }
