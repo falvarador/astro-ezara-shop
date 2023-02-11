@@ -2,20 +2,22 @@ import { DomainEvent, EventType } from "@/shared";
 
 export const userCreatedEvent: EventType = "user.created";
 
-interface User {
+type Product = {
   id: string;
   email: string;
   job: string;
+};
+
+export interface CreateProductEvent extends DomainEvent {
+  user: Product;
 }
 
-export interface UserCreatedEvent extends DomainEvent {
-  user: User;
-}
-
-export default function createUserCreatedEvent(user: User): UserCreatedEvent {
+export default function createProductEvent(
+  product: Product
+): CreateProductEvent {
   return {
     type: userCreatedEvent,
     timestamp: new Date(),
-    user,
+    user: product,
   };
 }

@@ -1,18 +1,27 @@
-import { FC } from "react";
+import createProductEvent from "@/product/event";
+
+import { EventDispatcherContextProvider, useEventDispatcher } from "@/shared";
 
 type Product = {
   name: string;
   description: string;
 };
 
-const ProductPage: FC<Product> = ({ name, description }) => {
-  return (
-    <div>
-      <h1>Product</h1>
-      <h1>{name}</h1>
-      <p>{description}</p>
-    </div>
-  );
-};
+export default function Product({ name, description }: Product) {
+  const eventDispatcher = useEventDispatcher();
 
-export default ProductPage;
+  function addProduct() {
+    eventDispatcher.dispatch(createProductEvent);
+  }
+
+  return (
+    <EventDispatcherContextProvider>
+      <div>
+        <h1>Product</h1>
+        <h1>{name}</h1>
+        <p>{description}</p>
+        <button onClick={addProduct}>Add</button>
+      </div>
+    </EventDispatcherContextProvider>
+  );
+}
