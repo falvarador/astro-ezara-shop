@@ -2,7 +2,7 @@ import { DomainEvent, EventType } from "@/shared";
 
 type EventSubscriber = (domainEvent: DomainEvent) => void;
 
-export class EventDispatcher {
+class EventDispatcher {
   private subscribers = new Map<EventType, EventSubscriber[]>();
 
   public subscribe(type: EventType, subscriber: EventSubscriber) {
@@ -34,6 +34,13 @@ export class EventDispatcher {
       return;
     }
 
+    console.log("Event dispatched: ", event);
     eventSubscribers.forEach((s) => s(event));
   }
+}
+
+const eventDispatcher = new EventDispatcher();
+
+export function useEventDispatcher() {
+  return eventDispatcher;
 }

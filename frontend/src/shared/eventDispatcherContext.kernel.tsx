@@ -1,4 +1,6 @@
-import { createContext, ReactNode, useContext, useEffect } from "react";
+/* import { createContext, ReactNode, useContext, useEffect } from "react";
+
+import { userCreatedEvent } from "@/app/(anonymous)/product/event";
 
 import { EventDispatcher } from "@/shared";
 
@@ -15,10 +17,16 @@ export function EventDispatcherContextProvider({
 }: {
   children: ReactNode;
 }) {
-  console.log("EventDispatcherContextProvider is called");
+  useEffect(() => {
+    eventDispatcher.subscribe(userCreatedEvent, (event) => {
+      console.log(event);
+    });
+  }, []);
+
   return (
     <EventDispatcherContext.Provider value={eventDispatcher}>
       {children}
     </EventDispatcherContext.Provider>
   );
 }
+ */
