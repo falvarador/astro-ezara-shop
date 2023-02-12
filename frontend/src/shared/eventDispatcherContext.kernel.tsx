@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, ReactNode, useContext, useEffect } from "react";
 
 import { EventDispatcher } from "@/shared";
 
@@ -15,6 +15,7 @@ export function EventDispatcherContextProvider({
 }: {
   children: ReactNode;
 }) {
+  console.log("EventDispatcherContextProvider is called");
   return (
     <EventDispatcherContext.Provider value={eventDispatcher}>
       {children}

@@ -1,23 +1,17 @@
 import { DomainEvent, EventType } from "@/shared";
 
+import { ProductDummy } from "../models";
+
 export const userCreatedEvent: EventType = "user.created";
 
-type Product = {
-  id: string;
-  email: string;
-  job: string;
-};
-
 export interface CreateProductEvent extends DomainEvent {
-  user: Product;
+  product: ProductDummy;
 }
 
-export default function createProductEvent(
-  product: Product
-): CreateProductEvent {
+export function createProductEvent(product: ProductDummy): CreateProductEvent {
   return {
     type: userCreatedEvent,
     timestamp: new Date(),
-    user: product,
+    product: product,
   };
 }

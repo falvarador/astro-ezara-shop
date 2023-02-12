@@ -1,3 +1,9 @@
+export type ProductDummy = {
+  id: number;
+  name: string;
+  description: string;
+};
+
 export type Product = {
   category: string;
   description: string;

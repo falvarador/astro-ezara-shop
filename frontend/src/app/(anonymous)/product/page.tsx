@@ -1,6 +1,6 @@
-import createProductEvent from "@/product/event";
-
 import { EventDispatcherContextProvider, useEventDispatcher } from "@/shared";
+import { createProductEvent } from "./event";
+import { ProductDummy } from "./models";
 
 type Product = {
   name: string;
@@ -11,7 +11,11 @@ export default function Product({ name, description }: Product) {
   const eventDispatcher = useEventDispatcher();
 
   function addProduct() {
-    eventDispatcher.dispatch(createProductEvent);
+    eventDispatcher.dispatch(
+      createProductEvent({
+        product: { id: 1, name, description } as ProductDummy,
+      })
+    );
   }
 
   return (
