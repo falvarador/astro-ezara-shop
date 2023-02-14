@@ -1,6 +1,6 @@
 type Subscription<S> = (state: S) => void;
 
-export abstract class Bloc<S> {
+export abstract class Ploc<S> {
   private internalState: S;
   private listeners: Subscription<S>[] = [];
 
@@ -26,7 +26,6 @@ export abstract class Bloc<S> {
 
   unsubscribe(listener: Subscription<S>) {
     const index = this.listeners.indexOf(listener);
-
     if (index > -1) {
       this.listeners.splice(index, 1);
     }

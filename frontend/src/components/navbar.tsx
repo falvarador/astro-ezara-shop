@@ -1,6 +1,6 @@
 import { Cart, Menu, Location, Search } from "@/components";
 
-import { MainMenu } from "@/models";
+import { MainMenu } from "@/domain";
 
 export function Navbar() {
   return (

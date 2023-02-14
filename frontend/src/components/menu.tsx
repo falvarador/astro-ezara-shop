@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Route } from "@/models";
+import { Route } from "@/domain/models";
 
 type Props = {
   isPrimary?: boolean;

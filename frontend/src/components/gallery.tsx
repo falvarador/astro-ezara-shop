@@ -1,6 +1,6 @@
 import { Card } from "@/components";
 
-import { getAllProducts } from "@/app/(anonymous)/product/services";
+import { getAllProducts } from "@/app/(anonymous)/product/domain";
 
 type Props = {
   category: string;

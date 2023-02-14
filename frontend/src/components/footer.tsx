@@ -1,7 +1,7 @@
 import { Facebook, Instagram, Whatsapp } from "@/components/icons";
 import { Menu } from "@/components/menu";
 
-import { MainMenu } from "@/models";
+import { MainMenu } from "@/domain";
 
 export function Footer() {
   return (
