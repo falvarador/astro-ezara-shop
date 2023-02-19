@@ -1,40 +1,60 @@
+import { Box, Container, SimpleGrid } from "@chakra-ui/react";
+import type { LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
-} from "@chakra-ui/react";
+  AdvantageSection,
+  Header,
+  HomeHeroCategories,
+  ProductCard,
+  TopBar,
+} from "~/components";
+import type { Categories, Product } from "~/models";
+
+type Props = {
+  products: Product[];
+  categories: Categories[];
+};
+
+export async function loader() {
+  const products = await fetch("https://fakestoreapi.com/products").then(
+    (res) => res.json()
+  );
+
+  const categories = await fetch(
+    "https://fakestoreapi.com/products/categories"
+  ).then((res) => res.json());
+
+  return json({ products, categories });
+}
 
 export default function Index() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { categories, products } = useLoaderData<Props>();
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
+      <TopBar />
+      <Box marginBottom="2rem">
+        <Header />
+      </Box>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut.
-          </ModalBody>
+      <main>
+        <Container
+          size={{
+            lg: "lg",
+          }}
+        >
+          <HomeHeroCategories categories={categories}></HomeHeroCategories>
+          <AdvantageSection />
 
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+          {
+            <SimpleGrid minChildWidth="255px" spacing={"1.85rem"}>
+              {products.map((product) => {
+                return <ProductCard {...product} key={product.id} />;
+              })}
+            </SimpleGrid>
+          }
+        </Container>
+      </main>
     </>
   );
 }
