@@ -1,12 +1,13 @@
-import { Box, Container, SimpleGrid } from "@chakra-ui/react";
-import type { LoaderFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Suspense } from "react";
+import type { DataFunctionArgs } from "@remix-run/node";
+import { defer } from "@remix-run/node";
+import { Await, useLoaderData } from "@remix-run/react";
 import {
   AdvantageSection,
   Header,
   HomeHeroCategories,
   ProductCard,
+  ProductCardSkeleton,
   TopBar,
 } from "~/components";
 import type { Categories, Product } from "~/models";
@@ -16,16 +17,16 @@ type Props = {
   categories: Categories[];
 };
 
-export async function loader() {
-  const products = await fetch("https://fakestoreapi.com/products").then(
-    (res) => res.json()
-  );
-
+export async function loader(_: DataFunctionArgs) {
   const categories = await fetch(
     "https://fakestoreapi.com/products/categories"
   ).then((res) => res.json());
 
-  return json({ products, categories });
+  const products = fetch("https://fakestoreapi.com/products").then((res) =>
+    res.json()
+  );
+
+  return defer({ categories, products });
 }
 
 export default function Index() {
@@ -33,9 +34,9 @@ export default function Index() {
   return (
     <>
       <TopBar />
-      <Box marginBottom="2rem">
+      <div className="mb-16">
         <Header />
-      </Box>
+      </div>
 
       <main>
         <Container
@@ -43,16 +44,24 @@ export default function Index() {
             lg: "lg",
           }}
         >
-          <HomeHeroCategories categories={categories}></HomeHeroCategories>
+          <Suspense>
+            <Await resolve={categories}>
+              {(categories) => <HomeHeroCategories categories={categories} />}
+            </Await>
+          </Suspense>
           <AdvantageSection />
 
-          {
-            <SimpleGrid minChildWidth="255px" spacing={"1.85rem"}>
-              {products.map((product) => {
-                return <ProductCard {...product} key={product.id} />;
-              })}
-            </SimpleGrid>
-          }
+          <Suspense fallback={<ProductCardSkeleton />}>
+            <Await resolve={products}>
+              {(products) => (
+                <SimpleGrid minChildWidth="255px" spacing={"1.85rem"}>
+                  {products.map((product) => {
+                    return <ProductCard {...product} key={product.id} />;
+                  })}
+                </SimpleGrid>
+              )}
+            </Await>
+          </Suspense>
         </Container>
       </main>
     </>

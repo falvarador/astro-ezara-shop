@@ -4,4 +4,5 @@ export * from "./CenteredLabel";
 export * from "./Header";
 export * from "./HomeHeroCategories";
 export * from "./ProductCard";
+export * from "./ProductCardSkeleton";
 export * from "./TopBar";

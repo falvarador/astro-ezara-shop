@@ -1,5 +1,3 @@
-import { Grid, GridItem, Show, Text } from "@chakra-ui/react";
-
 type Props = {
   title: string;
   content: string;
