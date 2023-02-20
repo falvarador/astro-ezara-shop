@@ -3,12 +3,12 @@ import {
   Links,
   LiveReload,
   Meta,
-  Outlet,
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
 
 import stylesheet from "~/tailwind.css";
+import { MainLayout } from "./layouts";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -28,7 +28,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <MainLayout />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

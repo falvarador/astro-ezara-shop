@@ -1,4 +1,4 @@
-import { Either } from "@/domain";
+import { Either } from "~/models";
 
 export class EitherAsync<L, R> {
   private constructor(

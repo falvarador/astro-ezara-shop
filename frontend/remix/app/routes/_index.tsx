@@ -2,15 +2,8 @@ import { Suspense } from "react";
 import type { DataFunctionArgs } from "@remix-run/node";
 import { defer } from "@remix-run/node";
 import { Await, useLoaderData } from "@remix-run/react";
-import {
-  AdvantageSection,
-  Header,
-  HomeHeroCategories,
-  ProductCard,
-  ProductCardSkeleton,
-  TopBar,
-} from "~/components";
 import type { Categories, Product } from "~/models";
+import { Gallery } from "~/components";
 
 type Props = {
   products: Product[];
@@ -33,37 +26,10 @@ export default function Index() {
   const { categories, products } = useLoaderData<Props>();
   return (
     <>
-      <TopBar />
-      <div className="mb-16">
-        <Header />
-      </div>
-
-      <main>
-        <Container
-          size={{
-            lg: "lg",
-          }}
-        >
-          <Suspense>
-            <Await resolve={categories}>
-              {(categories) => <HomeHeroCategories categories={categories} />}
-            </Await>
-          </Suspense>
-          <AdvantageSection />
-
-          <Suspense fallback={<ProductCardSkeleton />}>
-            <Await resolve={products}>
-              {(products) => (
-                <SimpleGrid minChildWidth="255px" spacing={"1.85rem"}>
-                  {products.map((product) => {
-                    return <ProductCard {...product} key={product.id} />;
-                  })}
-                </SimpleGrid>
-              )}
-            </Await>
-          </Suspense>
-        </Container>
-      </main>
+      <section className="space-y-32">
+        {/* @ts-expect-error Server Component */}
+        <Gallery category="Men's clothing" />
+      </section>
     </>
   );
 }
