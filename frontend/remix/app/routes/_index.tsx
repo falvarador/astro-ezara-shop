@@ -3,7 +3,7 @@ import type { DataFunctionArgs } from "@remix-run/node";
 import { defer } from "@remix-run/node";
 import { Await, useLoaderData } from "@remix-run/react";
 import type { Categories, Product } from "~/models";
-import { Gallery } from "~/components";
+import { Gallery, GallerySkeleton } from "~/components";
 
 type Props = {
   products: Product[];
@@ -27,9 +27,20 @@ export default function Index() {
   return (
     <>
       <section className="space-y-32">
-        {/* @ts-expect-error Server Component */}
-        <Gallery category="Men's clothing" />
+        <Suspense fallback={<GallerySkeleton />}>
+          <Await resolve={products}>
+            {(products) => (
+              <Gallery products={products} category="Men's clothing" />
+            )}
+          </Await>
+        </Suspense>
       </section>
+
+      {/* <Suspense>
+        <Await resolve={categories}>
+          {(categories) => <HomeHeroCategories categories={categories} />}
+        </Await>
+      </Suspense> */}
     </>
   );
 }
