@@ -1,71 +1,88 @@
-import fs from 'node:fs/promises'
-import express from 'express'
+let path = require("path");
+let fsp = require("fs/promises");
+let express = require("express");
+let { installGlobals } = require("@remix-run/node");
+
+// Polyfill Web Fetch API
+installGlobals();
 
 // Constants
-const isProduction = process.env.NODE_ENV === 'production'
-const port = process.env.PORT || 5173
-const base = process.env.BASE || '/'
+const port = process.env.PORT || 3000;
+const base = process.env.BASE || "/";
+const root = process.cwd();
+const isProduction = process.env.NODE_ENV === "production";
 
-// Cached production assets
-const templateHtml = isProduction
-  ? await fs.readFile('./dist/client/index.html', 'utf-8')
-  : ''
-const ssrManifest = isProduction
-  ? await fs.readFile('./dist/client/ssr-manifest.json', 'utf-8')
-  : undefined
-
-// Create http server
-const app = express()
-
-// Add Vite or respective production middlewares
-let vite
-if (!isProduction) {
-  const { createServer } = await import('vite')
-  vite = await createServer({
-    server: { middlewareMode: true },
-    appType: 'custom',
-    base
-  })
-  app.use(vite.middlewares)
-} else {
-  const compression = (await import('compression')).default
-  const sirv = (await import('sirv')).default
-  app.use(compression())
-  app.use(base, sirv('./dist/client', { extensions: [] }))
+function resolve(p) {
+  return path.resolve(__dirname, p);
 }
 
-// Serve HTML
-app.use('*', async (req, res) => {
-  try {
-    const url = req.originalUrl.replace(base, '')
+async function createServer() {
+  let app = express();
+  /**
+   * @type {import('vite').ViteDevServer}
+   */
+  let vite;
 
-    let template
-    let render
-    if (!isProduction) {
-      // Always read fresh template in development
-      template = await fs.readFile('./index.html', 'utf-8')
-      template = await vite.transformIndexHtml(url, template)
-      render = (await vite.ssrLoadModule('/src/entry-server.tsx')).render
-    } else {
-      template = templateHtml
-      render = (await import('./dist/server/entry-server.js')).render
-    }
+  if (!isProduction) {
+    vite = await require("vite").createServer({
+      root,
+      server: { middlewareMode: true },
+      appType: "custom",
+      base,
+    });
 
-    const rendered = await render(url, ssrManifest)
-
-    const html = template
-      .replace(`<!--app-head-->`, rendered.head ?? '')
-      .replace(`<!--app-html-->`, rendered.html ?? '')
-
-    res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
-  } catch (e) {
-    vite?.ssrFixStacktrace(e)
-    console.log(e.stack)
-    res.status(500).end(e.stack)
+    app.use(vite.middlewares);
+  } else {
+    app.use(require("compression")());
+    app.use(express.static(resolve("dist/client")));
   }
-})
 
-// Start http server
-app.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`)
-})
+  app.use("*", async (req, res) => {
+    let url = req.originalUrl;
+
+    try {
+      let template;
+      let render;
+
+      if (!isProduction) {
+        template = await fsp.readFile(resolve("index.html"), "utf8");
+        template = await vite.transformIndexHtml(url, template);
+        render = await vite
+          .ssrLoadModule("src/entry.server.tsx")
+          .then((m) => m.render);
+      } else {
+        template = await fsp.readFile(
+          resolve("dist/client/index.html"),
+          "utf8"
+        );
+        render = require(resolve("dist/server/entry.server.js")).render;
+      }
+
+      try {
+        let appHtml = await render(req);
+        let html = template.replace("<!--app-html-->", appHtml);
+        res.setHeader("Content-Type", "text/html");
+        return res.status(200).end(html);
+      } catch (e) {
+        if (e instanceof Response && e.status >= 300 && e.status <= 399) {
+          return res.redirect(e.status, e.headers.get("Location"));
+        }
+        throw e;
+      }
+    } catch (error) {
+      if (!isProduction) {
+        vite.ssrFixStacktrace(error);
+      }
+      console.log(error.stack);
+      res.status(500).end(error.stack);
+    }
+  });
+
+  return app;
+}
+
+createServer().then((app) => {
+  app.listen(port, () => {
+    console.log(`HTTP server is running at http://localhost:${port}`);
+  });
+});
