@@ -19,7 +19,7 @@ export function Footer() {
           <Menu pathNames={MainMenu} />
           <Menu pathNames={MainMenu} />
         </div>
-        <div className="border-t border-gray">
+        <div className="border-t border-gray dark:border-gray">
           <p className="text-gray text-xs py-4">
             © Copyright, {new Date().getFullYear()}
           </p>

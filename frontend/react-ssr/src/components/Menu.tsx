@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { NavLink } from "react-router-dom";
 import type { Route } from "~/models";
 
 type Props = {
@@ -12,17 +12,17 @@ export function Menu({ isPrimary = false, pathNames }: Props) {
       {isPrimary ? (
         <menu className="flex justify-center space-x-16 p-8">
           {pathNames.map((path) => (
-            <Link key={path.path} to={path.path} className="text-base">
+            <NavLink key={path.path} to={path.path} className="text-base">
               {path.name}
-            </Link>
+            </NavLink>
           ))}
         </menu>
       ) : (
         <menu className="flex flex-col space-y-2">
           {pathNames.map((path) => (
-            <Link key={path.path} to={path.path} className="text-sm">
+            <NavLink key={path.path} to={path.path} className="text-sm">
               {path.name}
-            </Link>
+            </NavLink>
           ))}
         </menu>
       )}

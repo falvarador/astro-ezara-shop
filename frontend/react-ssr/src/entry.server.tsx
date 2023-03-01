@@ -7,7 +7,7 @@ import {
   StaticRouterProvider,
 } from "react-router-dom/server";
 
-import { routes } from "~/App";
+import { routes } from "~/config";
 
 export async function render(request: express.Request) {
   const { query } = createStaticHandler(routes);
