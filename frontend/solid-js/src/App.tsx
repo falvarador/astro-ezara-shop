@@ -1,13 +1,14 @@
 import { createSignal } from "solid-js";
-import solidLogo from "./assets/solid.svg";
+import { Counter, Header } from "~/components";
 
 function App() {
-  const [count, setCount] = createSignal(0);
-
   return (
-    <div class="container">
-      <h1>Hello World!!!</h1>
-    </div>
+    <main>
+      <Header />
+      <section class="container mx-auto flex items-center justify-center mt-8">
+        <Counter />
+      </section>
+    </main>
   );
 }
 
