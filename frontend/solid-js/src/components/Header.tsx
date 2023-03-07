@@ -1,3 +1,4 @@
+import { A } from "@solidjs/router";
 import GitIssuesLogo from "~/assets/github.svg";
 import { Link } from "~/components";
 
@@ -5,16 +6,16 @@ export function Header() {
   return (
     <nav class="p-3 border-gray-200 rounded bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
       <div class="container flex flex-wrap items-center justify-between mx-auto">
-        <a href="#" class="flex items-center">
+        <A href="/" class="flex items-center">
           <img
             src={GitIssuesLogo}
             class="h-6 mr-3 sm:h-10"
             alt="GitIssues Logo"
           />
-          <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+          <h1 class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
             GitIssues
-          </span>
-        </a>
+          </h1>
+        </A>
         <button
           data-collapse-toggle="navbar-solid-bg"
           type="button"

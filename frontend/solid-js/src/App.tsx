@@ -1,15 +1,17 @@
-import { Header } from "~/components";
-
 import "flowbite";
+import { useRoutes } from "@solidjs/router";
+
+import { Header } from "~/components";
+import { routes } from "~/config";
+
+const Routes = useRoutes(routes);
 
 function App() {
   return (
     <main>
       <Header />
-      <section class="container mx-auto flex items-center justify-center mt-8">
-        <h1>
-          Git Issues <small>Seguimiento de problemas</small>{" "}
-        </h1>
+      <section class="container mx-auto">
+        <Routes />
       </section>
     </main>
   );
