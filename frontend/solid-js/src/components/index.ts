@@ -1,2 +1,2 @@
-export * from "./Counter";
+export * from "./Link";
 export * from "./Header";
