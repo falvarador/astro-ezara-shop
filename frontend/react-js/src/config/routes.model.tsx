@@ -1,4 +1,5 @@
-import { Home, homeLoader, NoMatch } from "~/app/";
+import { Navigate } from "react-router-dom";
+import { Issues, Issue, NoMatch } from "~/app/";
 import App from "~/App";
 
 export const routes = [
@@ -7,28 +8,18 @@ export const routes = [
     element: <App />,
     errorElement: <NoMatch />,
     children: [
-      {
-        index: true,
-        loader: homeLoader,
-        element: <Home />,
-      },
-      // {
-      //   path: "about",
-      //   element: <About />,
-      // },
-      // {
-      //   path: "dashboard",
-      //   loader: dashboardLoader,
-      //   element: <Dashboard />,
-      // },
-      // {
-      //   path: "redirect",
-      //   loader: redirectLoader,
-      // },
-      // {
-      //   path: "*",
-      //   element: <NoMatch />,
-      // },
+      { path: "list", element: <Issues /> },
+      { path: "issue/:id", element: <Issue /> },
+      { path: "*", element: <Navigate to="list" /> },
     ],
+  },
+
+  {
+    path: "/",
+    element: <Navigate to="issues/list" />,
+  },
+  {
+    path: "*",
+    element: <h1>Not found</h1>,
   },
 ];

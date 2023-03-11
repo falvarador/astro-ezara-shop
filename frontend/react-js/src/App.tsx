@@ -1,5 +1,16 @@
+import { Outlet, ScrollRestoration } from "react-router-dom";
+import { Header } from "~/components";
+
 function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return (
+    <section className="container mx-auto">
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <ScrollRestoration />
+    </section>
+  );
 }
 
 export default App;

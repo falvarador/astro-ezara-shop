@@ -1,17 +1,15 @@
-import { NavLink } from "react-router-dom";
+import { Link as ReactRouterLink } from "react-router-dom";
 
 type Props = {
   children?: React.ReactNode;
+  className?: string;
   href: string;
-  name?: string;
 };
 
-export function Link({ children, href, name }: Props) {
+export function Link({ children, href, className }: Props) {
   return (
-    <li>
-      <NavLink to={href} className="link-hover">
-        {children || name}
-      </NavLink>
-    </li>
+    <ReactRouterLink to={href} className={className}>
+      {children}
+    </ReactRouterLink>
   );
 }
