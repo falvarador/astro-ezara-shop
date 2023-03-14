@@ -9,10 +9,10 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@solidjs/router": "0.7.0",
-    "flowbite": "1.6.3",
+    "@solidjs/router": "0.8.0",
+    "flowbite": "1.6.4",
     "solid-icons": "1.0.4",
-    "solid-js": "1.6.4",
+    "solid-js": "1.6.14",
     "solid-markdown": "1.2.0"
   },
   "devDependencies": {
