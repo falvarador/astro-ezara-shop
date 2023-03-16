@@ -1,5 +1,11 @@
-import { render } from 'preact'
-import { App } from './app'
-import './index.css'
+import { render } from "preact";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-render(<App />, document.getElementById('app') as HTMLElement)
+import { routes } from "~/config";
+
+const router = createBrowserRouter(routes);
+
+render(
+  <RouterProvider router={router} fallbackElement={null} />,
+  document.getElementById("app") as HTMLElement
+);
